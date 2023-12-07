@@ -10,6 +10,7 @@ import { ApolloClient, InMemoryCache } from '@apollo/client'
 type country = {
   name: string
   code: string
+  emoji: string
 }
 
 export const client = new ApolloClient({
@@ -18,6 +19,7 @@ export const client = new ApolloClient({
 })
 
 export const App = () => {
+  const [emojis, setEmojis] = useState<string[]>([])
   const [searchTerms, setSearchTerms] = useState<string[]>([])
   const [countryCode, setCountryCode] = useState<string>('US')
   const [countryDetails, setCountryDetails] = useState<{}>({})
@@ -38,28 +40,33 @@ export const App = () => {
   }
 
   function onClickCountry(event: React.SyntheticEvent) {
-    // 1. grab country name from button
-    const countryName = event.currentTarget.textContent
-    // 2. get corresponding country code
-    const countryCode = countriesData.find((country: country) => {
+    const countryName = event.currentTarget.parentElement?.firstChild?.textContent
+    const matchingCountry = countriesData.find((country: country) => {
       return country.name === countryName
-    }).code
-    // update state to trigger Popover rerender
+    })
+    const countryCode = matchingCountry?.code
     setCountryCode(countryCode)
+    return countryCode
   }
 
   function onReset() {
+    setEmojis([])
     setSearchTerms([])
   }
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     // @ts-ignore
     const searchTerm = event.currentTarget.elements['search-input'].value
+    const matchingCountry = countriesData?.find((country: country) => {
+      return formatSearchTerm(searchTerm) === country.name
+    })
+    const emoji = matchingCountry?.emoji
 
     event.preventDefault()
 
     if (validateSearchTerm(searchTerm)) {
       setSearchTerms([...searchTerms, formatSearchTerm(searchTerm)])
+      setEmojis([...emojis, emoji])
       // @ts-ignore
       event.currentTarget.elements['search-input'].value = ''
       return
@@ -82,14 +89,20 @@ export const App = () => {
   }
 
   return (
-    <main className='flex flex-row'>
-      <Search onSubmit={onSubmit} />
-      <List
-        onClick={onClickCountry}
-        onReset={onReset}
-        searchTerms={searchTerms}
-      />
-      <Popover countryCode={countryCode} />
+    <main>
+      <div className='flex flex-row'>
+        <Search
+          countries={countriesData}
+          onReset={onReset}
+          onSubmit={onSubmit}
+        />
+        <List
+          onClick={onClickCountry}
+          emojis={emojis}
+          searchTerms={searchTerms}
+        />
+        <Popover countryCode={countryCode} />
+      </div>
     </main>
   )
 }

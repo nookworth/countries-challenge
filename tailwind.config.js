@@ -1,18 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{tsx,ts}', './public/index.html'],
+  content: [
+    './src/**/*.{tsx,ts}',
+    './public/index.html',
+    './node_modules/preline/preline.js',
+  ],
   theme: {
     colors: {
-      // palette 2
-      // 'dark-red': '#9B1B30',
-      // 'dark-silver': '#A8A8A8',
-      // 'gold': '#FFD700',
-      // 'light-gray': '#F0F0F0',
-      // 'medium-purple': '#9370DB',
-      // 'purple': '#800080',
-      // 'silver': '#C0C0C0',
-
-      // palette 3 + 1
       burgundy: '#800020',
       'bright-red': '#FF0000',
       'dark-gray': '#A9A9A9',
@@ -29,16 +23,16 @@ module.exports = {
       'off-white': '#F5F5F5',
       orange: '#FFA500',
       'sandy-beige': '#D2B48C',
+      'steel-blue': '#759FCB',
       'sky-blue': '#87CEEB',
       'sunshine-yellow': '#FFD700',
       yellow: '#FFFF00',
-
-      // transcribing app palette
       'system-blue': '#8FB9FF',
       'system-blue-light': '#C2D9FF',
       'system-blue-700': '#50B4E2',
       'system-brown': '#3A332C',
       'system-brown-light': '#8C7B69',
+      'system-brown-medium': '#BD8850',
       'system-gray': '#697A8C',
       'system-gray-dark': '#2C333A',
       'system-gray-light': '#AEB8C2',
@@ -59,6 +53,5 @@ module.exports = {
     },
     extend: {},
   },
-  plugins: [],
+  plugins: [require('preline/plugin')],
 }
-

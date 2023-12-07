@@ -1,0 +1,8 @@
+#details-popover {
+  max-height: 800px;
+}
+
+#details-popover::popover-open {
+  position: absolute;
+  top: 24px;
+}

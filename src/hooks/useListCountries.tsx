@@ -7,6 +7,7 @@ const LIST_COUNTRIES = gql`
     countries {
       name
       code
+      emoji
     }
   }
 `
