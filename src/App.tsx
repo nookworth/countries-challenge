@@ -90,18 +90,20 @@ export const App = () => {
 
   return (
     <main>
-      <div className='flex flex-row'>
+      <div className=''>
         <Search
           countries={countriesData}
           onReset={onReset}
           onSubmit={onSubmit}
         />
-        <List
-          onClick={onClickCountry}
-          emojis={emojis}
-          searchTerms={searchTerms}
-        />
-        <Popover countryCode={countryCode} />
+        <div className='flex flex-row'>
+          <List
+            onClick={onClickCountry}
+            emojis={emojis}
+            searchTerms={searchTerms}
+          />
+          <Popover countryCode={countryCode} />
+        </div>
       </div>
     </main>
   )
