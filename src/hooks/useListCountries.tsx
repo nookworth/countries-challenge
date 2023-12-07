@@ -1,10 +1,6 @@
 import { useMemo } from 'react'
-import { ApolloClient, InMemoryCache, gql, useQuery } from '@apollo/client'
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  uri: 'https://countries.trevorblades.com',
-})
+import { gql, useQuery } from '@apollo/client'
+import { client } from '../App'
 
 const LIST_COUNTRIES = gql`
   {
